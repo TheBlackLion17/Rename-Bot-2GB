@@ -7,7 +7,7 @@ class Config(object):
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "") 
    
     # database config
-    DB_NAME = os.environ.get("DB_NAME","Rohesh")     
+    DB_NAME = os.environ.get("DB_NAME","Agsmod")     
     DB_URL  = os.environ.get("DB_URL","")
  
     # other configs
@@ -16,7 +16,7 @@ class Config(object):
     ADMIN = int(os.environ.get("ADMIN", "5698613889"))
 
     # channels logs
-    FORCE_SUB   = os.environ.get("FORCE_SUB", "Rohesh_Bots") 
+    FORCE_SUB   = os.environ.get("FORCE_SUB", "AgsModsOG") 
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", ""))
 
     # wes response configuration     
@@ -37,12 +37,12 @@ Bot Is Made By : @Rohesh_Bots"""
     ABOUT_TXT = """
 ╭───────────────⍟
 ├<b>🤖 My Name</b> : {}
-├<b>🖥️ Developer</b> : <a href=https://t.me/Rohesh_Gavit>Rohesh Bots</a> 
-├<b>👨‍💻 Programer</b> : <a href=https://t.me/Rohesh_Gavit>Rohesh Developer</a>
+├<b>🖥️ Developer</b> : <a href=https://t.me/Agsmod>Agsmod Bots</a> 
+├<b>👨‍💻 Programer</b> : <a href=https://t.me/Agsmod>Rohesh Developer</a>
 ├<b>📕 Library</b> : <a href=https://github.com/pyrogram>Pyrogram</a>
 ├<b>✏️ Language</b> : <a href=https://www.python.org>Python 3</a>
 ├<b>💾 Database</b> : <a href=https://cloud.mongodb.com>Mongo DB</a>
-├<b>📊 Build Version</b> : <a href=https://t.me/rohesh_bots>Rename v4.5.0</a></b>     
+├<b>📊 Build Version</b> : <a href=https://t.me/AgsModsOG>Rename v4.5.0</a></b>     
 ╰───────────────⍟
 """
 
@@ -84,5 +84,5 @@ Bot Is Made By : @Rohesh_Bots"""
 
 If You Like My Bots & Projects, You Can 🎁 Donate Me Any Amount From 10 Rs Upto Your Choice.
 
-<b>🛍 UPI ID:</b> `7507446728upi@axl`
+<b>🛍 UPI ID:</b> `8547178698upi@axl`
 """
