@@ -29,7 +29,7 @@ class Bot(Client):
             app = web.AppRunner(await web_server())
             await app.setup()       
             await web.TCPSite(app, "0.0.0.0", 8080).start()     
-        print(f"{me.first_name} Is Started.....✨️")
+        print(f"{me.first_name} Is On To Fire.....🔥")
         
         if Config.LOG_CHANNEL:
             try:
