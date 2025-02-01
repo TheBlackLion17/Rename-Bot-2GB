@@ -8,5 +8,5 @@ aiohttp
 pytz
 Flask
 gunicorn
-aiohttp
-pyrogram
+pyrogram==2.0.106
+aiohttp>=3.8.0
