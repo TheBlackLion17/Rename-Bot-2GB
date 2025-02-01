@@ -1,9 +1,9 @@
 {
     "name": "Renamer Bot 2GB",
     "description": "Telegram File Renamer Bot 2GB",
-    "logo": "https://graph.org/file/0805983ea8c297831371f.jpg",
+    "logo": "https://graph.org/file/2c62c5c158d42b0dc8deb.jpg",
     "keywords": ["Renamer Bot 2GB", "Mongo DB"],    
-    "repository": "https://github.com/Rohesh-Gavit/Rename-Bot-2GB",
+    "repository": "https://github.com/TechifyBots/Rename-Bot-2GB",
     "env": {
         "API_ID": {
             "description": "Your APP ID From my.telegram.org ",
@@ -47,19 +47,21 @@
         },
         "DB_NAME":{ 
             "description":"Your Mongo DB Database Name ",
-            "value": "roheshbots",
+            "value": "jishu-botz",
             "required": false
         },
         "START_PIC": {
-            "description": "Your Bot start cmd Pic from @Rohesh_Bots",
-            "value": "https://graph.org/file/0805983ea8c297831371f.jpg",
+            "description": "Your Bot start cmd Pic from @MT_TelegraPH_Bot",
+            "value": "https://graph.org/file/77d2eddf9657a87acb881.jpg",
             "required": false
         }
     },
     "buildpacks": [
         {
             "url": "heroku/python"
+        },
+        {
+            "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
         }
     ]
 }
-
