@@ -6,8 +6,9 @@ class Database:
 
     def __init__(self, uri, database_name):
         self._client = motor.motor_asyncio.AsyncIOMotorClient(uri)
-        self.roheshbots = self._client[database_name]
-        self.col = self.roheshbots.user
+        self.jishubotz = self._client[database_name]
+        self.col = self.jishubotz.user
+        self.bannedList = self.jishubotz.bannedList
 
     def new_user(self, id):
         return dict(
@@ -15,7 +16,9 @@ class Database:
             file_id=None,
             caption=None,
             prefix=None,
-            suffix=None
+            suffix=None,
+            metadata=False,
+            metadata_code="By :- @TechifyBots"
         )
 
     async def add_user(self, b, m):
@@ -39,7 +42,9 @@ class Database:
 
     async def delete_user(self, user_id):
         await self.col.delete_many({'_id': int(user_id)})
-    
+
+    #======================= Thumbnail ========================#
+
     async def set_thumbnail(self, id, file_id):
         await self.col.update_one({'_id': int(id)}, {'$set': {'file_id': file_id}})
 
@@ -47,30 +52,76 @@ class Database:
         user = await self.col.find_one({'_id': int(id)})
         return user.get('file_id', None)
 
+    #======================= Caption ========================#
+
     async def set_caption(self, id, caption):
         await self.col.update_one({'_id': int(id)}, {'$set': {'caption': caption}})
 
     async def get_caption(self, id):
         user = await self.col.find_one({'_id': int(id)})
         return user.get('caption', None)
-        
+
+    #======================= Prefix ========================#
+
     async def set_prefix(self, id, prefix):
         await self.col.update_one({'_id': int(id)}, {'$set': {'prefix': prefix}})  
-        
+
     async def get_prefix(self, id):
         user = await self.col.find_one({'_id': int(id)})
-        return user.get('prefix', None)      
-        
+        return user.get('prefix', None)
+
+    #======================= Suffix ========================#
+
     async def set_suffix(self, id, suffix):
         await self.col.update_one({'_id': int(id)}, {'$set': {'suffix': suffix}})  
-        
+
     async def get_suffix(self, id):
         user = await self.col.find_one({'_id': int(id)})
-        return user.get('suffix', None)              
+        return user.get('suffix', None)
 
+    #======================= Metadata ========================#
 
-roheshbots = Database(Config.DB_URL, Config.DB_NAME)
+    async def set_metadata(self, id, bool_meta):
+        await self.col.update_one({'_id': int(id)}, {'$set': {'metadata': bool_meta}})
 
+    async def get_metadata(self, id):
+        user = await self.col.find_one({'_id': int(id)})
+        return user.get('metadata', None)
 
+    #======================= Metadata Code ========================#    
 
+    async def set_metadata_code(self, id, metadata_code):
+        await self.col.update_one({'_id': int(id)}, {'$set': {'metadata_code': metadata_code}})
 
+    async def get_metadata_code(self, id):
+        user = await self.col.find_one({'_id': int(id)})
+        return user.get('metadata_code', None)
+
+    #======================= Ban User ========================#
+
+    async def ban_user(self, user_id):
+        user = await self.bannedList.find_one({'banId': int(user_id)})
+        if user:
+            return False
+        else:
+            await self.bannedList.insert_one({'banId': int(user_id)})
+            return True
+
+    async def is_banned(self, user_id):
+        user = await self.bannedList.find_one({'banId': int(user_id)})
+        return True if user else False
+    
+    async def is_unbanned(self, user_id):
+        try: 
+            if await self.bannedList.find_one({'banId': int(user_id)}):
+                await self.bannedList.delete_one({'banId': int(user_id)})
+                return True
+            else:
+                return False
+        except Exception as e:
+            e = f'Fᴀɪʟᴇᴅ ᴛᴏ ᴜɴʙᴀɴ.Rᴇᴀsᴏɴ : {e}'
+            print(e)
+            return e
+
+# Create a Database instance
+jishubotz = Database(Config.DB_URL, Config.DB_NAME)
