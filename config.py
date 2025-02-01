@@ -1,4 +1,5 @@
-import os, time
+import os, time, re
+id_pattern = re.compile(r'^.\d+$')
 
 class Config(object):
     # pyro client config
