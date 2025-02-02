@@ -19,6 +19,8 @@ class Config(object):
     # channels logs
     FORCE_SUB   = os.environ.get("FORCE_SUB", "AgsModsOG") 
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002402008837"))
+    BIN_CHANNEL = int(os.environ.get("BIN_CHANNEL", "-1001871354889"))
+    
 
     # wes response configuration     
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
