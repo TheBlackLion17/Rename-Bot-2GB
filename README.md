@@ -1,8 +1,11 @@
-<img src="https://graph.org/file/0805983ea8c297831371f.jpg" alt="logo" target="/blank">
+
 
 <h1 align="center">
- <b><a href="https://t.me/Rohesh_bots" target="/blank"> Rename Bot 2GB </a></>
-</h1>
+ <img src="https://i.imgur.com/jG9CXh1.jpeg" alt="logo" target="/blank">
+ </h1>
+ <h2 align="center">
+ <b><a href="https://t.me/AgsModsOG" target="/blank"> Rename Bot 2GB </a></>
+</h2>
 
 <p align="center">🩵 Thanks for Being Here 🩵</p>
 
@@ -30,7 +33,7 @@ Here is our **Demo** bot -
 <summary>Deploy To Koyeb</summary>
 <p>
 <br>                 
-<a target="/blank" href="https://app.koyeb.com/deploy?type=git&repository=https://github.com/Rohesh-Gavit/Rename-Bot-2GB-" >
+<a target="/blank" href="https://app.koyeb.com/deploy?type=git&repository=https://github.com/TheBlackLion17/Rename-Bot-2GB" >
   <img src="https://www.koyeb.com/static/images/deploy/button.svg" alt="Deploy">
 </a>
 </p>
@@ -39,7 +42,7 @@ Here is our **Demo** bot -
 <summary>Deploy To Heroku</summary>
 <p>
 <br>
-<a href="https://heroku.com/deploy?template=https://github.com/Rohesh-Gavit/Rename-Bot-2GB-">
+<a href="https://heroku.com/deploy?template=https://github.com/TheBlackLion17/Rename-Bot-2GB">
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
 </a>
 </p>
@@ -86,15 +89,13 @@ status - Check bot status [FOR ADMINS USE ONLY].
 
 
 
-### ❤️ Rᴇᴘᴏ ❤️
-Rᴇᴘᴏ Oᴡɴᴇʀ/Cʀᴇᴀᴛᴏʀ *[![RohesH_GaviT-Mᴇ](https://img.shields.io/static/v1?label=RohesH_GaviT&message=devs&color=critical)](https://t.me/Rohesh_Gavit)
 
 
 
 ### ⭕️ BOTS CHANNEL ⭕️
-- [RohesH Bots](https://t.me/Rohesh_Bots)
+- [AGS MODS ](https://t.me/AgsModsOG)
 
 
 
 ### 🧑‍💻 CONTACT DEVELOPER 👨‍💻
-- [Rohesh Developer](https://t.me/Rohesh_Gavit)
+- [AGS Developer](https://t.me/Gal_GadotV1_bot)
