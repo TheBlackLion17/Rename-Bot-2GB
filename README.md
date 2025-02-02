@@ -9,9 +9,6 @@
 
 <p align="center">🩵 Thanks for Being Here 🩵</p>
 
-Here is our **Demo** bot -
-
-[![Click Here](https://img.shields.io/badge/Demo%20Bot-Click%20Here-blue?style=flat&logo=telegram&labelColor=white&link=https://t.me/Renamer_Fast_Bot)](https://t.me/Renamer_Fast_Bot)
 
 
 ### CONFIGS VARIABLES
