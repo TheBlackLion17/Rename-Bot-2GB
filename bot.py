@@ -35,7 +35,7 @@ class Bot(Client):
         if Config.WEBHOOK:
             app = web.AppRunner(await web_server())
             await app.setup()
-            PORT = int(os.environ.get("PORT", 8000))  # Use port 8000 or env PORT
+            PORT = int(os.environ.get("PORT", 8081))  # Use port 8000 or env PORT
             await web.TCPSite(app, "0.0.0.0", PORT).start()
         print(f"{me.first_name} Is Started.....✨️")
         for id in Config.ADMIN:
