@@ -29,13 +29,13 @@ class Config(object):
 
 class Txt(object):
     # part of text configuration
-    START_TXT = """Halo {}  what's up
+    START_TXT = """HELLO {}  what's up
 
-𝘐 𝘢𝘮 𝘢 𝘙𝘦𝘯𝘢𝘮𝘦 𝘉𝘰𝘵 
-𝘠𝘰𝘶 𝘤𝘢𝘯 𝘶𝘴𝘦 𝘮𝘦 𝘧𝘰𝘳 𝘙𝘦𝘯𝘢𝘮𝘦 & 𝘊𝘩𝘢𝘯𝘨𝘦 𝘛𝘩𝘶𝘮𝘣𝘯𝘢𝘪𝘭 𝘖𝘧 𝘠𝘰𝘶𝘳 𝘍𝘪𝘭𝘦
-𝘐 𝘤𝘢𝘯 𝘢𝘭𝘴𝘰 𝘊𝘰𝘯𝘷𝘦𝘳𝘵 𝘝𝘪𝘥𝘦𝘰 𝘛𝘰 𝘍𝘪𝘭𝘦 & 𝘍𝘪𝘭𝘦 𝘛𝘰 𝘝𝘪𝘥𝘦𝘰 
+❖ I Am A Powerful File Renamer Bot
+❖ I Can Rename Files, Change Thumbnails, Convert Between 
+        Video And File, And Support Custom Thumbnails And Captions 
 
-𝘐 𝘸𝘢𝘴 𝘔𝘢𝘥𝘦 𝘉𝘺 : @AgsModsOG"""
+• Maintainer: : @AgsModsOG"""
 
     ABOUT_TXT = """
 ╭───────────────⍟
