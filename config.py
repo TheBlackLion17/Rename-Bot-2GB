@@ -73,11 +73,13 @@ class Txt(object):
 𝗔𝗻𝘆 𝗢𝘁𝗵𝗲𝗿 𝗛𝗲𝗹𝗽 𝗖𝗼𝗻𝘁𝗮𝗰𝘁 :- <a href=https://t.me/Agsmod>Developer</a>
 """
 
-    PROGRESS_BAR = "**🔻 Downloading In Our Server..**\n\n"
-            f"💾 **Size:** {downloaded:.1f} MB | {total_size} MB\n"
-            f"✅ **Done:** {percentage:.2f}%\n"
-            f"🚀 **Speed:** {speed} MB/s\n"
-            f"⏳ **ETA:** {int(eta // 60)}m, {int(eta % 60)}s"
+    PROGRESS_BAR = """\n
+╭━━━━❰ᴏɴ ꜰɪʀᴇ 🔥❱━➣
+┣⪼ <b>🗃️ Sɪᴢᴇ:</b> {1} | {2}
+┣⪼ <b>⏳️ Dᴏɴᴇ :</b> {0}%
+┣⪼ <b>🚀 Sᴩᴇᴇᴅ:</b> {3}/s
+┣⪼ <b>⏰️ Eᴛᴀ:</b> {4}
+╰━━━━━━━━━━━━━━━➣"""
 
     DONATE_TXT = """
 <b>🥲 Thanks For Showing Interest In Donation! ❤️</b>
