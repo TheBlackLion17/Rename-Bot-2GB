@@ -31,11 +31,10 @@ class Txt(object):
     # part of text configuration
     START_TXT = """HELLO {}  what's up
 
-❖ I Am A Powerful File Renamer Bot
-❖ I Can Rename Files, Change Thumbnails, Convert Between 
-        Video And File, And Support Custom Thumbnails And Captions 
+◈ I Aᴍ A Pᴏᴡᴇʀғᴜʟ 4GB Fɪʟᴇ Rᴇɴᴀᴍᴇʀ Bᴏᴛ.
+◈ I Cᴀɴ Rᴇɴᴀᴍᴇ Fɪʟᴇs, Cʜᴀɴɢᴇ Tʜᴜᴍʙɴᴀɪʟs, Cᴏɴᴠᴇʀᴛ Bᴇᴛᴡᴇᴇɴ Vɪᴅᴇᴏ Aɴᴅ Fɪʟᴇ, Aɴᴅ Sᴜᴘᴘᴏʀᴛ Cᴜsᴛᴏᴍ Tʜᴜᴍʙɴᴀɪʟs Aɴᴅ Cᴀᴘᴛɪᴏɴs.
 
-• Maintainer: : @AgsModsOG"""
+•  Mᴀɪɴᴛᴀɪɴᴇʀ: : @AgsModsOG"""
 
     ABOUT_TXT = """
 ╭───────────────⍟
@@ -74,13 +73,11 @@ class Txt(object):
 𝗔𝗻𝘆 𝗢𝘁𝗵𝗲𝗿 𝗛𝗲𝗹𝗽 𝗖𝗼𝗻𝘁𝗮𝗰𝘁 :- <a href=https://t.me/Agsmod>Developer</a>
 """
 
-    PROGRESS_BAR = """\n
-╭━━━━❰ᴏɴ ꜰɪʀᴇ 🔥❱━➣
-┣⪼ <b>🗃️ Sɪᴢᴇ:</b> {1} | {2}
-┣⪼ <b>⏳️ Dᴏɴᴇ :</b> {0}%
-┣⪼ <b>🚀 Sᴩᴇᴇᴅ:</b> {3}/s
-┣⪼ <b>⏰️ Eᴛᴀ:</b> {4}
-╰━━━━━━━━━━━━━━━➣"""
+    PROGRESS_BAR = "**🔻 Downloading In Our Server..**\n\n"
+            f"💾 **Size:** {downloaded:.1f} MB | {total_size} MB\n"
+            f"✅ **Done:** {percentage:.2f}%\n"
+            f"🚀 **Speed:** {speed} MB/s\n"
+            f"⏳ **ETA:** {int(eta // 60)}m, {int(eta % 60)}s"
 
     DONATE_TXT = """
 <b>🥲 Thanks For Showing Interest In Donation! ❤️</b>
