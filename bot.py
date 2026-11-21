@@ -8,6 +8,7 @@ from aiohttp import web
 from route import web_server
 import pyrogram.utils
 import pyromod
+from mysql_store import init_pool, close_pool
 
 pyrogram.utils.MIN_CHAT_ID = -999999999999
 pyrogram.utils.MIN_CHANNEL_ID = -1009999999999
@@ -21,13 +22,18 @@ class Bot(Client):
             api_id=Config.API_ID,
             api_hash=Config.API_HASH,
             bot_token=Config.BOT_TOKEN,
-            workers=200,
+            workers=32,
             plugins={"root": "plugins"},
             sleep_threshold=15,
         )
 
     async def start(self):
-        await super().start()
+        await init_pool()
+        try:
+            await super().start()
+        except BaseException:
+            await close_pool()
+            raise
         me = await self.get_me()
         self.mention = me.mention
         self.username = me.username  
@@ -54,7 +60,10 @@ class Bot(Client):
                 print(f"Error sending message to LOG_CHANNEL: {e}")
 
     async def stop(self):
-        await super().stop()
+        try:
+            await super().stop()
+        finally:
+            await close_pool()
         print(f"{self.mention} is stopped.")
 
 Bot().run()
