@@ -1,127 +1,78 @@
-import motor.motor_asyncio
-from config import Config
+"""MySQL-only replacement for the legacy MongoDB user settings API."""
+from mysql_store import execute, fetch_one, fetch_all
 from .utils import send_log
 
 class Database:
+    async def _ensure(self, user_id):
+        uid = int(user_id)
+        await execute("INSERT IGNORE INTO users (telegram_id) VALUES (%s)", (uid,))
+        await execute("INSERT IGNORE INTO user_settings (telegram_id) VALUES (%s)", (uid,))
 
-    def __init__(self, uri, database_name):
-        self._client = motor.motor_asyncio.AsyncIOMotorClient(uri)
-        self.jishubotz = self._client[database_name]
-        self.col = self.jishubotz.user
-        self.bannedList = self.jishubotz.bannedList
+    async def add_user(self, bot, message):
+        user = message.from_user
+        exists = await self.is_user_exist(user.id)
+        await self._ensure(user.id)
+        await execute("UPDATE users SET username=%s, first_name=%s WHERE telegram_id=%s",
+                      (user.username, user.first_name, user.id))
+        if not exists:
+            await send_log(bot, user)
 
-    def new_user(self, id):
-        return dict(
-            _id=int(id),                                   
-            file_id=None,
-            caption=None,
-            prefix=None,
-            suffix=None,
-            metadata=False,
-            metadata_code="By :- @TechifyBots"
-        )
-
-    async def add_user(self, b, m):
-        u = m.from_user
-        if not await self.is_user_exist(u.id):
-            user = self.new_user(u.id)
-            await self.col.insert_one(user)            
-            await send_log(b, u)
-
-    async def is_user_exist(self, id):
-        user = await self.col.find_one({'_id': int(id)})
-        return bool(user)
+    async def is_user_exist(self, user_id):
+        return bool(await fetch_one("SELECT telegram_id FROM users WHERE telegram_id=%s", (int(user_id),)))
 
     async def total_users_count(self):
-        count = await self.col.count_documents({})
-        return count
+        row = await fetch_one("SELECT COUNT(*) AS count FROM users")
+        return row["count"]
 
     async def get_all_users(self):
-        all_users = self.col.find({})
-        return all_users
+        # Preserve the legacy async-iterator interface used by broadcast handlers.
+        rows = await fetch_all("SELECT telegram_id AS _id FROM users")
+        async def iterator():
+            for row in rows:
+                yield row
+        return iterator()
 
     async def delete_user(self, user_id):
-        await self.col.delete_many({'_id': int(user_id)})
+        await execute("DELETE FROM users WHERE telegram_id=%s", (int(user_id),))
 
-    #======================= Thumbnail ========================#
+    async def _set(self, user_id, column, value):
+        allowed = {"thumbnail_file_id", "caption", "prefix", "suffix", "metadata", "metadata_code"}
+        if column not in allowed:
+            raise ValueError("Unsupported settings field")
+        await self._ensure(user_id)
+        await execute(f"UPDATE user_settings SET {column}=%s WHERE telegram_id=%s", (value, int(user_id)))
 
-    async def set_thumbnail(self, id, file_id):
-        await self.col.update_one({'_id': int(id)}, {'$set': {'file_id': file_id}})
+    async def _get(self, user_id, column):
+        allowed = {"thumbnail_file_id", "caption", "prefix", "suffix", "metadata", "metadata_code"}
+        if column not in allowed:
+            raise ValueError("Unsupported settings field")
+        row = await fetch_one(f"SELECT {column} FROM user_settings WHERE telegram_id=%s", (int(user_id),))
+        return row[column] if row else None
 
-    async def get_thumbnail(self, id):
-        user = await self.col.find_one({'_id': int(id)})
-        return user.get('file_id', None)
-
-    #======================= Caption ========================#
-
-    async def set_caption(self, id, caption):
-        await self.col.update_one({'_id': int(id)}, {'$set': {'caption': caption}})
-
-    async def get_caption(self, id):
-        user = await self.col.find_one({'_id': int(id)})
-        return user.get('caption', None)
-
-    #======================= Prefix ========================#
-
-    async def set_prefix(self, id, prefix):
-        await self.col.update_one({'_id': int(id)}, {'$set': {'prefix': prefix}})  
-
-    async def get_prefix(self, id):
-        user = await self.col.find_one({'_id': int(id)})
-        return user.get('prefix', None)
-
-    #======================= Suffix ========================#
-
-    async def set_suffix(self, id, suffix):
-        await self.col.update_one({'_id': int(id)}, {'$set': {'suffix': suffix}})  
-
-    async def get_suffix(self, id):
-        user = await self.col.find_one({'_id': int(id)})
-        return user.get('suffix', None)
-
-    #======================= Metadata ========================#
-
-    async def set_metadata(self, id, bool_meta):
-        await self.col.update_one({'_id': int(id)}, {'$set': {'metadata': bool_meta}})
-
-    async def get_metadata(self, id):
-        user = await self.col.find_one({'_id': int(id)})
-        return user.get('metadata', None)
-
-    #======================= Metadata Code ========================#    
-
-    async def set_metadata_code(self, id, metadata_code):
-        await self.col.update_one({'_id': int(id)}, {'$set': {'metadata_code': metadata_code}})
-
-    async def get_metadata_code(self, id):
-        user = await self.col.find_one({'_id': int(id)})
-        return user.get('metadata_code', None)
-
-    #======================= Ban User ========================#
+    async def set_thumbnail(self, id, file_id): await self._set(id, "thumbnail_file_id", file_id)
+    async def get_thumbnail(self, id): return await self._get(id, "thumbnail_file_id")
+    async def set_caption(self, id, caption): await self._set(id, "caption", caption)
+    async def get_caption(self, id): return await self._get(id, "caption")
+    async def set_prefix(self, id, prefix): await self._set(id, "prefix", prefix)
+    async def get_prefix(self, id): return await self._get(id, "prefix")
+    async def set_suffix(self, id, suffix): await self._set(id, "suffix", suffix)
+    async def get_suffix(self, id): return await self._get(id, "suffix")
+    async def set_metadata(self, id, bool_meta): await self._set(id, "metadata", bool(bool_meta))
+    async def get_metadata(self, id): return await self._get(id, "metadata")
+    async def set_metadata_code(self, id, metadata_code): await self._set(id, "metadata_code", metadata_code)
+    async def get_metadata_code(self, id): return await self._get(id, "metadata_code")
 
     async def ban_user(self, user_id):
-        user = await self.bannedList.find_one({'banId': int(user_id)})
-        if user:
-            return False
-        else:
-            await self.bannedList.insert_one({'banId': int(user_id)})
-            return True
+        if await self.is_banned(user_id): return False
+        await execute("INSERT INTO banned_users (telegram_id) VALUES (%s)", (int(user_id),))
+        return True
 
     async def is_banned(self, user_id):
-        user = await self.bannedList.find_one({'banId': int(user_id)})
-        return True if user else False
-    
-    async def is_unbanned(self, user_id):
-        try: 
-            if await self.bannedList.find_one({'banId': int(user_id)}):
-                await self.bannedList.delete_one({'banId': int(user_id)})
-                return True
-            else:
-                return False
-        except Exception as e:
-            e = f'Fᴀɪʟᴇᴅ ᴛᴏ ᴜɴʙᴀɴ.Rᴇᴀsᴏɴ : {e}'
-            print(e)
-            return e
+        return bool(await fetch_one("SELECT telegram_id FROM banned_users WHERE telegram_id=%s", (int(user_id),)))
 
-# Create a Database instance
-jishubotz = Database(Config.DB_URL, Config.DB_NAME)
+    async def is_unbanned(self, user_id):
+        if not await self.is_banned(user_id): return False
+        await execute("DELETE FROM banned_users WHERE telegram_id=%s", (int(user_id),))
+        return True
+
+jishubotz = Database()
