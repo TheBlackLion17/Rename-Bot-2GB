@@ -8,8 +8,7 @@ class Config(object):
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "") 
    
     # database config
-    DB_NAME = os.environ.get("DB_NAME","cluster0")     
-    DB_URL  = os.environ.get("DB_URL", "")
+    # Persistent storage is MySQL only (MYSQL_* environment variables).
  
     # other configs
     BOT_UPTIME  = time.time()
